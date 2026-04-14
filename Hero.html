@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Section - Mi Arca</title>
+    <style>
+    /* Importamos las fuentes */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Outfit:wght@300;400;600;800&display=swap');
+
+    :root {
+        --gold: #C8922A;
+        --white: #ffffff;
+        --black: #030303;
+    }
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+    }
+
+    .arca-hero {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background-color: #000;
+        text-align: center;
+        padding: 140px 20px 120px;
+        font-family: 'Outfit', sans-serif;
+        box-sizing: border-box;
+    }
+
+    .hero-bg-wrapper {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .hero-bg-img {
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 0.5;
+        transform: scale(1.1);
+        animation: zoomOut 1.5s ease-out forwards;
+    }
+    /* Degradado negro */
+    .overlay-v {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 70%, rgba(0,0,0,0.8) 100%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 10;
+        max-width: 900px;
+        width: 100%;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.8s ease-out 0.5s forwards;
+    }
+
+    /* Micro label */
+    .micro-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 28px;
+    }
+
+    .line {
+        height: 1px;
+        width: 28px;
+        background: var(--gold);
+        opacity: 0.6;
+    }
+
+    .label-text {
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        color: var(--gold);
+    }
+
+    /* Título principal */
+    h1.main-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2.5rem, 8vw, 5.5rem);
+        font-weight: 300;
+        line-height: 1.15;
+        color: var(--white);
+        margin-bottom: 28px;
+    }
+
+    h1.main-title span.italic-gold {
+        font-style: italic;
+        color: var(--gold);
+    }
+
+    /* Descripción */
+    .hero-description {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.75);
+        max-width: 600px;
+        margin: 0 auto 40px;
+        line-height: 1.65;
+    }
+
+    /* Botones CTA */
+    .cta-group {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        margin-bottom: 50px;
+    }
+
+    .btn-primary {
+        background: var(--white);
+        color: var(--black);
+        padding: 17px 42px;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.15em;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        width: auto;
+    }
+
+    .btn-primary:hover {
+        background: var(--gold);
+        color: var(--white);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(200, 146, 42, 0.3);
+    }
+
+    .btn-primary svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .btn-secondary {
+        color: rgba(255, 255, 255, 0.65);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.15em;
+        transition: color 0.3s;
+        padding: 10px 20px;
+    }
+
+    .btn-secondary:hover {
+        color: var(--white);
+    }
+
+    /* Indicadores de confianza - MÓVIL */
+    .trust-indicators {
+        margin-top: 0;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 32px;
+        opacity: 0;
+        animation: fadeIn 1s ease-out 1.2s forwards;
+        max-width: 340px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .indicator-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .indicator-item svg {
+        color: var(--gold);
+        width: 32px;
+        height: 32px;
+        stroke-width: 1.8;
+    }
+
+    .indicator-item span {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.5;
+    }
+
+    /* Fineprint */
+    .fineprint-container {
+        position: absolute;
+        bottom: 30px;
+        left: 0;
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
+        z-index: 10;
+    }
+
+    .fineprint {
+        margin: 0 auto;
+        max-width: 800px;
+        font-size: 9px;
+        font-weight: 300;
+        line-height: 1.6;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ===== TABLETS PEQUEÑAS (480px+) ===== */
+    @media (min-width: 480px) {
+        .arca-hero {
+            padding: 150px 30px 130px;
+        }
+        
+        .label-text {
+            font-size: 11px;
+            letter-spacing: 0.28em;
+        }
+        
+        .line {
+            width: 35px;
+        }
+        
+        .micro-label {
+            margin-bottom: 32px;
+        }
+        
+        h1.main-title {
+            margin-bottom: 32px;
+        }
+        
+        .hero-description {
+            margin-bottom: 45px;
+        }
+        
+        .cta-group {
+            gap: 20px;
+            margin-bottom: 55px;
+        }
+        
+        .btn-primary {
+            padding: 18px 45px;
+            font-size: 13px;
+        }
+        
+        .btn-secondary {
+            font-size: 13px;
+        }
+        
+        .trust-indicators {
+            gap: 35px;
+            max-width: 400px;
+        }
+        
+        .indicator-item svg {
+            width: 34px;
+            height: 34px;
+        }
+        
+        .indicator-item span {
+            font-size: 11.5px;
+        }
+        
+        .fineprint {
+            font-size: 9.5px;
+        }
+    }
+
+    /* ===== TABLETS (640px+) ===== */
+    @media (min-width: 640px) {
+        .arca-hero {
+            padding: 160px 40px 140px;
+        }
+        
+        .trust-indicators {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 100%;
+        }
+        
+        .indicator-item svg {
+            width: 28px;
+            height: 28px;
+        }
+        
+        .indicator-item span {
+            font-size: 10px;
+        }
+    }
+
+    /* ===== TABLETS GRANDES (768px+) ===== */
+    @media (min-width: 768px) {
+        .arca-hero {
+            padding: 170px 50px 150px;
+        }
+        
+        .label-text {
+            font-size: 11px;
+            letter-spacing: 0.3em;
+        }
+        
+        .line {
+            width: 40px;
+        }
+        
+        .cta-group {
+            flex-direction: row;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .btn-primary {
+            padding: 18px 48px;
+            font-size: 13px;
+        }
+        
+        .btn-secondary {
+            font-size: 13px;
+        }
+        
+        .trust-indicators {
+            gap: 50px;
+        }
+        
+        .indicator-item svg {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .indicator-item span {
+            font-size: 10.5px;
+        }
+        
+        .fineprint {
+            font-size: 10px;
+        }
+    }
+
+    /* ===== DESKTOP (1024px+) ===== */
+    @media (min-width: 1024px) {
+        .arca-hero {
+            padding: 180px 60px 160px;
+        }
+        
+        .label-text {
+            font-size: 12px;
+            letter-spacing: 0.32em;
+        }
+        
+        .line {
+            width: 45px;
+        }
+        
+        .micro-label {
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+        
+        h1.main-title {
+            margin-bottom: 36px;
+        }
+        
+        .hero-description {
+            margin-bottom: 50px;
+        }
+        
+        .cta-group {
+            gap: 35px;
+            margin-bottom: 70px;
+        }
+        
+        .btn-primary {
+            padding: 19px 52px;
+            font-size: 14px;
+        }
+        
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .btn-secondary {
+            font-size: 14px;
+        }
+        
+        .trust-indicators {
+            gap: 60px;
+        }
+        
+        .indicator-item svg {
+            width: 34px;
+            height: 34px;
+        }
+        
+        .indicator-item span {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+        }
+        
+        .fineprint-container {
+            bottom: 35px;
+        }
+        
+        .fineprint {
+            font-size: 10px;
+        }
+    }
+
+    /* ===== DESKTOP GRANDE (1280px+) ===== */
+    @media (min-width: 1280px) {
+        .arca-hero {
+            padding: 190px 80px 170px;
+        }
+        
+        .label-text {
+            font-size: 13px;
+            letter-spacing: 0.35em;
+        }
+        
+        .line {
+            width: 50px;
+        }
+        
+        .trust-indicators {
+            gap: 70px;
+        }
+        
+        .indicator-item svg {
+            width: 38px;
+            height: 38px;
+        }
+        
+        .indicator-item span {
+            font-size: 12px;
+        }
+    }
+
+    /* ===== DESKTOP XL (1440px+) ===== */
+    @media (min-width: 1440px) {
+        .arca-hero {
+            padding: 200px 100px 180px;
+        }
+        
+        .trust-indicators {
+            gap: 80px;
+        }
+        
+        .indicator-item svg {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .indicator-item span {
+            font-size: 12.5px;
+        }
+        
+        .fineprint {
+            font-size: 11px;
+        }
+    }
+
+    /* Pantallas muy bajitas */
+    @media (max-height: 700px) {
+        .fineprint-container {
+            position: relative;
+            bottom: auto;
+            margin-top: 50px;
+        }
+        
+        .arca-hero {
+            padding-bottom: 80px;
+        }
+    }
+
+    /* Animaciones */
+    @keyframes zoomOut {
+        to {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+    </style>
+</head>
+<body>
+    <section class="arca-hero">
+        <div class="hero-bg-wrapper">
+            <img src="https://images.unsplash.com/photo-1515276427842-f85802d514a2?auto=format&fit=crop&w=1920&q=80" alt="Wheat field" class="hero-bg-img">
+            <div class="overlay-v"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="micro-label">
+                <div class="line"></div>
+                <span class="label-text">Seguridad Alimentaria Premium</span>
+                <div class="line"></div>
+            </div>
+
+            <h1 class="main-title">
+                Protege a los tuyos <br>
+                <span class="italic-gold">con total certeza</span>
+            </h1>
+
+            <p class="hero-description">
+                Tu seguro de comida de larga duración diseñado para tiempos difíciles. 
+                Planes exclusivos desde <strong>25 €/mes</strong>.
+            </p>
+
+            <div class="cta-group">
+                <a href="#pricing" class="btn-primary">
+                    Suscríbete Ya
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+                <a href="#funciona" class="btn-secondary">Saber más</a>
+            </div>
+
+            <div class="trust-indicators">
+                <div class="indicator-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    <span>Almacenamiento <br> Garantizado</span>
+                </div>
+                <div class="indicator-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <span>Disponibilidad <br> Inmediata*</span>
+                </div>
+                <div class="indicator-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    <span>Urgencia <br> Nacional</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="fineprint-container">
+            <p class="fineprint">
+                *Almacenamiento seguro garantizado. Recogida disponible tras 3 meses de carencia o bajo urgencia nacional declarada. 
+                Sujeta a los Términos y Condiciones vigentes de Mi Arca. © 2026 Mi Arca.
+            </p>
+        </div>
+    </section>
+</body>
+</html>

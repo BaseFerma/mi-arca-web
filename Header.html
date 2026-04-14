@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header - Mi Arca</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000; /* Fondo negro para previsualizar el header */
+        }
+
+        .miarca-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            box-sizing: border-box;
+            z-index: 1000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+        }
+        
+        /* Logo */
+        .header-logo {
+            display: flex;
+            flex-direction: column;
+            line-height: 0.8;
+        }
+        .header-logo .mi {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+        .header-logo .arca {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 16px;
+            letter-spacing: -0.5px;
+            color: #C8922A;
+        }
+        
+        /* Botones - Móvil primero */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-login {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            padding: 10px 16px;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .btn-login:hover {
+            color: rgba(255,255,255,1);
+        }
+        
+        .btn-subscribe {
+            font-family: 'Outfit', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            padding: 11px 18px;
+            border: 1.5px solid rgba(255,255,255,0.25);
+            border-radius: 50px;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+      .btn-subscribe:hover {
+        color: #ffffff;
+        background: rgba(200,146,42,0.2);
+        border-color: rgba(200,146,42,0.4);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(200,146,42,0.2);
+    }
+        
+        /* Tablets pequeñas (mayor a 480px) */
+        @media (min-width: 480px) {
+            .miarca-header {
+                padding: 18px 30px;
+            }
+            .header-logo .mi {
+                font-size: 11px;
+            }
+            .header-logo .arca {
+                font-size: 18px;
+            }
+            .header-actions {
+                gap: 14px;
+            }
+            .btn-login {
+                font-size: 12px;
+                padding: 11px 18px;
+            }
+            .btn-subscribe {
+                font-size: 12px;
+                padding: 12px 22px;
+            }
+        }
+        
+        /* Tablets (mayor a 768px) */
+        @media (min-width: 768px) {
+            .miarca-header {
+                padding: 20px 40px;
+            }
+            .header-logo .mi {
+                font-size: 12px;
+                letter-spacing: 2.5px;
+            }
+            .header-logo .arca {
+                font-size: 22px;
+            }
+            .header-actions {
+                gap: 20px;
+            }
+            .btn-login {
+                font-size: 12px;
+                letter-spacing: 1.5px;
+                padding: 8px 12px;
+            }
+            .btn-subscribe {
+                font-size: 12px;
+                letter-spacing: 1.5px;
+                padding: 12px 24px;
+            }
+        }
+        
+        /* Desktop (mayor a 1024px) */
+        @media (min-width: 1024px) {
+            .miarca-header {
+                padding: 25px 50px;
+            }
+            .header-logo .mi {
+                font-size: 13px;
+                letter-spacing: 3px;
+            }
+            .header-logo .arca {
+                font-size: 26px;
+            }
+            .header-actions {
+                gap: 30px;
+            }
+            .btn-login {
+                font-size: 13px;
+                letter-spacing: 2px;
+            }
+            .btn-subscribe {
+                font-size: 13px;
+                letter-spacing: 2px;
+                padding: 13px 28px;
+            }
+        }
+        
+        /* Desktop grande (mayor a 1440px) */
+        @media (min-width: 1440px) {
+            .miarca-header {
+                padding: 28px 60px;
+            }
+            .header-logo .arca {
+                font-size: 28px;
+            }
+            .btn-subscribe {
+                padding: 14px 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="miarca-header">
+        <div class="header-logo">
+            <span class="mi">MI</span>
+            <span class="arca">ARCA</span>
+        </div>
+        <div class="header-actions">
+            <a href="#login" class="btn-login">INICIAR SESIÓN</a>
+            <a href="#planes" class="btn-subscribe">SUSCRÍBETE YA</a>
+        </div>
+    </header>
+</body>
+</html>
