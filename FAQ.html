@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Mi Arca</title>
+    <style>
+    /* =========================
+       BASE STYLES & IMPORTS
+    ========================= */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Outfit:wght@300;400;600;800&display=swap');
+
+    :root {
+        --gold: #C8922A;
+        --white: #ffffff;
+        --black: #030303;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--black);
+        color: var(--white);
+        font-family: 'Outfit', sans-serif;
+    }
+
+    /* =========================
+       FAQ SECTION
+    ========================= */
+    .arca-faq {
+        background-color: var(--black) !important;
+        padding: clamp(60px, 8vw, 120px) 20px !important;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Header */
+    .faq-header {
+        text-align: center;
+        margin-bottom: clamp(40px, 6vw, 70px);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .micro-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 28px;
+    }
+
+    .micro-label .line {
+        height: 1px;
+        width: 28px;
+        background: var(--gold);
+        opacity: 0.6;
+    }
+
+    .micro-label .label-text {
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        color: var(--gold);
+    }
+
+    .faq-title {
+        font-family: 'Playfair Display', serif !important;
+        font-size: clamp(2rem, 5vw, 4rem) !important;
+        font-weight: 300 !important;
+        margin-bottom: 20px !important;
+        line-height: 1.2 !important;
+        color: var(--white) !important;
+    }
+
+    .faq-title .italic-gold {
+        font-style: italic !important;
+        color: var(--gold) !important;
+    }
+
+    .faq-subtitle {
+        font-size: clamp(1rem, 2vw, 1.2rem) !important;
+        color: rgba(255, 255, 255, 0.6) !important;
+        font-weight: 300 !important;
+        line-height: 1.6 !important;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Accordion Container */
+    .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    /* FAQ Item Card */
+    .faq-item {
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        box-shadow: none !important; /* Reset Elementor */
+    }
+
+    .faq-item:hover {
+        border-color: rgba(200, 146, 42, 0.3) !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+    }
+
+    .faq-item.active {
+        border-color: rgba(200, 146, 42, 0.6) !important;
+        background: rgba(200, 146, 42, 0.05) !important;
+    }
+
+    /* FAQ Question (Button Reset) */
+    button.faq-question {
+        width: 100% !important;
+        text-align: left !important;
+        background: transparent !important;
+        border: none !important;
+        padding: clamp(20px, 3vw, 30px) !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        cursor: pointer !important;
+        color: var(--white) !important;
+        font-family: 'Outfit', sans-serif !important;
+        font-size: clamp(1.1rem, 1.5vw, 1.3rem) !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.5px !important;
+        box-shadow: none !important;
+        text-transform: none !important;
+        outline: none !important;
+        margin: 0 !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+    }
+
+    button.faq-question:hover, 
+    button.faq-question:focus, 
+    button.faq-question:active {
+        background: transparent !important;
+        color: var(--white) !important;
+        outline: none !important;
+    }
+
+    /* Plus/Minus Icon */
+    .faq-icon {
+        position: relative;
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-left: 20px;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+        content: '';
+        position: absolute;
+        background-color: var(--gold) !important;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Vertical line */
+    .faq-icon::before {
+        top: 0;
+        left: 7px;
+        width: 2px;
+        height: 100%;
+    }
+
+    /* Horizontal line */
+    .faq-icon::after {
+        top: 7px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+    }
+
+    .faq-item.active .faq-icon::before {
+        transform: rotate(90deg);
+        opacity: 0;
+    }
+
+    .faq-item.active .faq-icon::after {
+        transform: rotate(180deg);
+    }
+
+    /* FAQ Answer Panel */
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .faq-answer-inner {
+        padding: 0 clamp(20px, 3vw, 30px) clamp(20px, 3vw, 30px);
+        color: rgba(255, 255, 255, 0.7) !important;
+        font-size: clamp(0.95rem, 1.2vw, 1.1rem) !important;
+        line-height: 1.7 !important;
+        font-weight: 300 !important;
+    }
+
+    .faq-answer-inner strong {
+        color: var(--white) !important;
+        font-weight: 600 !important;
+    }
+
+    </style>
+</head>
+<body>
+
+    <section class="arca-faq" id="preguntas-frecuentes">
+        <div class="faq-header">
+            <div class="micro-label">
+                <div class="line"></div>
+                <span class="label-text">Claridad Absoluta</span>
+                <div class="line"></div>
+            </div>
+            <h2 class="faq-title">Preguntas <span class="italic-gold">Frecuentes</span></h2>
+            <p class="faq-subtitle">Todo lo que necesitas saber sobre nuestro seguro de comida y almacenamiento preventivo.</p>
+        </div>
+
+        <div class="faq-container">
+            <!-- FAQ 1 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>¿Qué es exactamente Mi Arca?</span>
+                    <div class="faq-icon"></div>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        <p>No somos un supermercado ni una simple compra online. Somos un <strong>servicio de almacenamiento preventivo</strong>. Gestionamos, rotamos y protegemos tu stock de alimentos de larga duración mediante una suscripción mensual, asegurando que tú y tu familia estéis cubiertos cuando realmente lo necesitéis.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>¿Cómo se distribuye mi cuota mensual?</span>
+                    <div class="faq-icon"></div>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        <p>Creemos en la transparencia total. El <strong>70% de tu cuota</strong> se destina directamente a la compra de alimentos reales a tu nombre. El <strong>30% restante</strong> cubre el mantenimiento, la logística, la seguridad de nuestros almacenes climatizados y la gestión del sistema.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>¿Cuándo puedo retirar mi comida acumulada?</span>
+                    <div class="faq-icon"></div>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        <p>Existe un periodo mínimo de carencia de <strong>3 meses</strong> para garantizar la estabilidad operativa de nuestros almacenes. Sin embargo, en caso de una <strong>urgencia nacional declarada</strong> (desastres naturales, cortes prolongados de suministro, etc.), la disponibilidad de tu stock es inmediata y absoluta.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>¿Cuánto tiempo puede durar la comida almacenada?</span>
+                    <div class="faq-icon"></div>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        <p>Utilizamos tecnología avanzada de <strong>"Mylarización"</strong> (envasado en bolsas de Mylar) junto con potentes absorbentes de oxígeno. Esto permite que productos básicos no perecederos como el arroz, la pasta o las legumbres mantengan todas sus propiedades nutricionales <strong>hasta por 30 años</strong> en óptimas condiciones.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>¿Qué tipos de alimentos incluye mi plan?</span>
+                    <div class="faq-icon"></div>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        <p>Proporcionamos una base nutricional sólida y completa. Tu reserva incluirá <strong>arroces, pasta, harinas, leche en polvo, enlatados premium, aceites</strong> e ingredientes básicos esenciales. Estos alimentos están cuidadosamente seleccionados por su densidad calórica y altísima durabilidad.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 6 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>¿Dónde se guardan físicamente mis alimentos?</span>
+                    <div class="faq-icon"></div>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        <p>Tu comida reposa en nuestra red de almacenes cerrados, conocidos como <strong>"Las Arcas"</strong>. Son instalaciones físicas de alta seguridad, diseñadas con excelente aislamiento térmico y preparadas para operar con autonomía gracias a sus <strong>paneles solares integrados</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Script minimalista para la animación del Acordeón -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const button = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+
+                button.addEventListener('click', () => {
+                    // Si permitimos solo uno abierto a la vez (opcional):
+                    // faqItems.forEach(otherItem => {
+                    //     if (otherItem !== item && otherItem.classList.contains('active')) {
+                    //         otherItem.classList.remove('active');
+                    //         otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                    //     }
+                    // });
+
+                    // Toggle estado actual
+                    item.classList.toggle('active');
+
+                    // Animar altura
+                    if (item.classList.contains('active')) {
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                    } else {
+                        answer.style.maxHeight = null;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

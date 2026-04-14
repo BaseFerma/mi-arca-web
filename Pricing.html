@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes de Suscripción - Mi Arca</title>
+    <style>
+    /* =========================
+       BASE STYLES & IMPORTS
+    ========================= */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Outfit:wght@300;400;600;800&display=swap');
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #030303;
+        color: #fff;
+    }
+
+    /* Micro label sharing styles from Hero for consistency */
+    .micro-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 28px;
+    }
+
+    .line {
+        height: 1px;
+        width: 28px;
+        background: #C8922A;
+        opacity: 0.6;
+    }
+
+    .label-text {
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        color: #C8922A;
+    }
+
+    /* =========================
+       PRICING SECTION
+    ========================= */
+    .arca-pricing {
+        background-color: #030303;
+        padding: clamp(60px, 8vw, 120px) 0;
+        font-family: 'Outfit', sans-serif;
+        color: #fff;
+    }
+
+    /* Header */
+    .pricing-header {
+        text-align: center;
+        margin-bottom: clamp(50px, 6vw, 90px);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 clamp(16px, 4vw, 40px);
+    }
+
+    .pricing-title {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 300;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+
+    .pricing-title .italic-gold {
+        font-style: italic;
+        color: #C8922A;
+    }
+
+    .pricing-subtitle {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 300;
+        line-height: 1.6;
+    }
+
+    /* =========================
+       CONTENEDOR CON SCROLL
+    ========================= */
+    .pricing-container {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: visible; /* IMPORTANTE: permite que el contenido se desborde verticalmente */
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #C8922A rgba(255, 255, 255, 0.1);
+        padding: 30px 0 50px 0; /* Espacio arriba y abajo para evitar cortes */
+    }
+
+    /* Personalizar scrollbar para Webkit */
+    .pricing-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .pricing-container::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+    }
+
+    .pricing-container::-webkit-scrollbar-thumb {
+        background: #C8922A;
+        border-radius: 10px;
+    }
+
+    .pricing-container::-webkit-scrollbar-thumb:hover {
+        background: #b07d1f;
+    }
+
+    /* =========================
+       GRID HORIZONTAL
+    ========================= */
+    .pricing-grid {
+        display: flex;
+        gap: clamp(16px, 2vw, 24px);
+        padding: 0 clamp(16px, 4vw, 40px);
+        width: max-content;
+    }
+
+    /* Desktop: Centra el grid cuando cabe en pantalla */
+    @media (min-width: 1600px) {
+        .pricing-container {
+            overflow-x: visible;
+            padding: 40px 0 60px 0; /* Más espacio en desktop */
+        }
+        
+        .pricing-grid {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            justify-content: center;
+        }
+    }
+
+    /* =========================
+       TARJETAS
+    ========================= */
+    .pricing-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: clamp(24px, 3vw, 40px);
+        display: flex;
+        flex-direction: column;
+        transition: all 0.3s ease;
+        
+        /* Tamaño fijo para scroll horizontal */
+        min-width: 280px;
+        max-width: 280px;
+        flex-shrink: 0;
+        
+        /* Evitar cortes durante hover */
+        margin: 10px 0; /* Espacio para el translateY */
+    }
+
+    /* Tablet */
+    @media (min-width: 768px) {
+        .pricing-card {
+            min-width: 300px;
+            max-width: 300px;
+        }
+    }
+
+    /* Desktop pequeño - ya caben todas */
+    @media (min-width: 1600px) {
+        .pricing-card {
+            min-width: auto;
+            max-width: 280px;
+            flex: 1;
+            margin: 15px 0; /* Más espacio en desktop */
+        }
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-12px);
+        border-color: rgba(200, 146, 42, 0.5);
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Tarjeta destacada */
+    .pricing-card.featured {
+        border-color: #C8922A;
+        background: rgba(200, 146, 42, 0.05);
+        margin-top: 0; /* La featured empieza desde arriba para que la etiqueta se vea */
+        padding-top: clamp(32px, 4vw, 48px); /* Compensa el espacio de la etiqueta */
+    }
+
+    @media (min-width: 1024px) {
+        .pricing-card.featured {
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-12px);
+        }
+    }
+
+    /* Etiqueta destacada */
+    .featured-tag {
+        position: absolute;
+        top: -12px; /* Posición fija para que siempre se vea */
+        left: 50%;
+        transform: translateX(-50%);
+        background: #C8922A;
+        color: #fff;
+        font-size: clamp(9px, 1.5vw, 11px);
+        font-weight: 800;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        letter-spacing: 2px;
+        border-radius: 3px;
+        white-space: nowrap;
+        z-index: 10;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    /* =========================
+       CONTENIDO DE TARJETAS
+    ========================= */
+    .card-header {
+        margin-bottom: 24px;
+        text-align: center;
+    }
+
+    .plan-name {
+        font-size: clamp(11px, 1.5vw, 13px);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 16px;
+    }
+
+    .plan-price {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 4px;
+    }
+
+    .currency {
+        font-size: clamp(1.2rem, 2vw, 1.5rem);
+        font-weight: 300;
+        color: #C8922A;
+    }
+
+    .amount {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 700;
+        letter-spacing: -1px;
+    }
+
+    .period {
+        font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Desglose */
+    .plan-breakdown {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 18px 0;
+        margin-bottom: 24px;
+    }
+
+    .breakdown-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: clamp(11px, 1.2vw, 13px);
+        margin-bottom: 8px;
+    }
+
+    .breakdown-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .item-label {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .item-value {
+        font-weight: 600;
+        color: #fff;
+    }
+
+    /* Características */
+    .plan-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 30px 0;
+        flex-grow: 1;
+    }
+
+    .plan-features li {
+        font-size: clamp(12px, 1.3vw, 14px);
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        line-height: 1.4;
+    }
+
+    .plan-features li::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        background: #C8922A;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    /* =========================
+       BOTONES
+    ========================= */
+    .btn-card {
+        display: block;
+        text-align: center;
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        text-decoration: none;
+        font-size: clamp(11px, 1.2vw, 13px);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+        width: 100%;
+        cursor: pointer;
+    }
+
+    .btn-card:hover,
+    .btn-card:focus {
+        background: #fff;
+        color: #000;
+        border-color: #fff;
+    }
+
+    .btn-card.btn-gold {
+        background: #C8922A;
+        border-color: #C8922A;
+        color: #fff;
+    }
+
+    .btn-card.btn-gold:hover,
+    .btn-card.btn-gold:focus {
+        background: #fff;
+        color: #000;
+        border-color: #fff;
+    }
+    </style>
+</head>
+<body>
+    <section class="arca-pricing" id="pricing">
+        <div class="pricing-header">
+            <div class="micro-label">
+                <div class="line"></div>
+                <span class="label-text">Planes de Suscripción</span>
+                <div class="line"></div>
+            </div>
+            <h2 class="pricing-title">Invierte en tu <span class="italic-gold">tranquilidad</span></h2>
+            <p class="pricing-subtitle">Selecciona el nivel de protección que mejor se adapte a las necesidades de tu familia.</p>
+        </div>
+
+        <div class="pricing-container">
+            <div class="pricing-grid">
+                <!-- Plan 1: Semilla -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3 class="plan-name">Plan Semilla</h3>
+                        <div class="plan-price">
+                            <span class="currency">€</span>
+                            <span class="amount">25</span>
+                            <span class="period">/mes</span>
+                        </div>
+                    </div>
+                    <div class="plan-breakdown">
+                        <div class="breakdown-item">
+                            <span class="item-label">Comida</span>
+                            <span class="item-value">17,50 €</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-label">Mantenimiento</span>
+                            <span class="item-value">7,50 €</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Almacenamiento Seguro</li>
+                        <li>Rotación de Stock</li>
+                        <li>Carencia de 3 meses</li>
+                    </ul>
+                    <a href="#contratar" class="btn-card">Seleccionar</a>
+                </div>
+
+                <!-- Plan 2: Cosecha -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3 class="plan-name">Plan Cosecha</h3>
+                        <div class="plan-price">
+                            <span class="currency">€</span>
+                            <span class="amount">50</span>
+                            <span class="period">/mes</span>
+                        </div>
+                    </div>
+                    <div class="plan-breakdown">
+                        <div class="breakdown-item">
+                            <span class="item-label">Comida</span>
+                            <span class="item-value">35,00 €</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-label">Mantenimiento</span>
+                            <span class="item-value">15,00 €</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Almacenamiento Seguro</li>
+                        <li>Rotación de Stock</li>
+                        <li>Carencia de 3 meses</li>
+                    </ul>
+                    <a href="#contratar" class="btn-card">Seleccionar</a>
+                </div>
+
+                <!-- Plan 3: Granero (Destacado) -->
+                <div class="pricing-card featured">
+                    <div class="featured-tag">Más Popular</div>
+                    <div class="card-header">
+                        <h3 class="plan-name">Plan Granero</h3>
+                        <div class="plan-price">
+                            <span class="currency">€</span>
+                            <span class="amount">100</span>
+                            <span class="period">/mes</span>
+                        </div>
+                    </div>
+                    <div class="plan-breakdown">
+                        <div class="breakdown-item">
+                            <span class="item-label">Comida</span>
+                            <span class="item-value">70,00 €</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-label">Mantenimiento</span>
+                            <span class="item-value">30,00 €</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Almacenamiento Seguro</li>
+                        <li>Rotación de Stock</li>
+                        <li>Carencia de 3 meses</li>
+                        <li>Prioridad en Urgencia</li>
+                    </ul>
+                    <a href="#contratar" class="btn-card btn-gold">Seleccionar</a>
+                </div>
+
+                <!-- Plan 4: Refugio -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3 class="plan-name">Plan Refugio</h3>
+                        <div class="plan-price">
+                            <span class="currency">€</span>
+                            <span class="amount">200</span>
+                            <span class="period">/mes</span>
+                        </div>
+                    </div>
+                    <div class="plan-breakdown">
+                        <div class="breakdown-item">
+                            <span class="item-label">Comida</span>
+                            <span class="item-value">140,00 €</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-label">Mantenimiento</span>
+                            <span class="item-value">60,00 €</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Almacenamiento Seguro</li>
+                        <li>Rotación de Stock</li>
+                        <li>Carencia de 3 meses</li>
+                        <li>Prioridad en Urgencia</li>
+                    </ul>
+                    <a href="#contratar" class="btn-card">Seleccionar</a>
+                </div>
+
+                <!-- Plan 5: Arca -->
+                <div class="pricing-card">
+                    <div class="card-header">
+                        <h3 class="plan-name">Plan Arca</h3>
+                        <div class="plan-price">
+                            <span class="currency">€</span>
+                            <span class="amount">500</span>
+                            <span class="period">/mes</span>
+                        </div>
+                    </div>
+                    <div class="plan-breakdown">
+                        <div class="breakdown-item">
+                            <span class="item-label">Comida</span>
+                            <span class="item-value">350,00 €</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="item-label">Mantenimiento</span>
+                            <span class="item-value">150,00 €</span>
+                        </div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>Almacenamiento Seguro</li>
+                        <li>Rotación de Stock</li>
+                        <li>Carencia de 3 meses</li>
+                        <li>Atención VIP 24/7</li>
+                    </ul>
+                    <a href="#contratar" class="btn-card">Seleccionar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
