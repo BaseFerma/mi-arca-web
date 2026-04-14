@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer - Mi Arca</title>
+    <style>
+        /* =========================
+       BASE STYLES & IMPORTS
+    ========================= */
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap');
+
+        .arca-footer-wrapper {
+            --gold: #C8922A;
+            --white: #ffffff;
+            --black: #030303;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* =========================
+       FOOTER SECTION
+    ========================= */
+        .arca-footer {
+            background-color: #030303;
+            /* Color negro directo para evitar fallos de variables */
+            color: #ffffff;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px 20px 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        @media (min-width: 768px) {
+            .footer-container {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 300px;
+        }
+
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            line-height: 0.8;
+            text-decoration: none;
+        }
+
+        .footer-logo .mi {
+            font-weight: 900;
+            font-size: 13px;
+            letter-spacing: 3px;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+
+        .footer-logo .arca {
+            font-weight: 900;
+            font-size: 26px;
+            letter-spacing: -0.5px;
+            color: #C8922A;
+            transition: color 0.3s ease;
+        }
+
+        .footer-logo:hover .mi {
+            color: #C8922A;
+        }
+
+        .footer-brand p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .footer-links-wrapper {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .footer-links-wrapper {
+                width: auto;
+                gap: 80px;
+            }
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-column h4 {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+            margin: 0 0 4px 0;
+        }
+
+        .footer-link {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-weight: 300;
+            transition: color 0.3s ease;
+            width: fit-content;
+        }
+
+        .footer-link:hover {
+            color: #C8922A;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 50px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+
+        .copyright {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
+            margin: 0;
+        }
+
+        .legal-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .legal-link {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            font-weight: 300;
+            transition: color 0.3s ease;
+        }
+
+        .legal-link:hover {
+            color: #ffffff;
+        }
+    </style>
+
+    <div class="arca-footer-wrapper">
+        <footer class="arca-footer">
+            <div class="footer-container">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <span class="mi">MI</span>
+                        <span class="arca">ARCA</span>
+                    </a>
+                    <p>Tu seguro de comida de larga duración. Almacenaje preventivo y garantizado en instalaciones
+                        seguras.</p>
+                </div>
+
+                <div class="footer-links-wrapper">
+                    <div class="footer-column">
+                        <h4>Navegación</h4>
+                        <a href="#inicio" class="footer-link">Inicio</a>
+                        <a href="#funciona" class="footer-link">Cómo Funciona</a>
+                        <a href="#planes" class="footer-link">Planes de Suscripción</a>
+                        <a href="#preguntas-frecuentes" class="footer-link">FAQ</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Soporte</h4>
+                        <a href="#login" class="footer-link">Panel de Cliente</a>
+                        <a href="mailto:info@miarca.es" class="footer-link">Contacto</a>
+                        <a href="#emergencia" class="footer-link" style="color: #C8922A;">Protocolo de Emergencia</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2026 Mi Arca. Todos los derechos reservados.</p>
+                <div class="legal-links">
+                    <a href="/aviso-legal" class="legal-link">Aviso Legal</a>
+                    <a href="/privacidad" class="legal-link">Política de Privacidad</a>
+                    <a href="/terminos" class="legal-link">Términos y Condiciones</a>
+                    <a href="/cookies" class="legal-link">Política de Cookies</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    </body>
+
+</html>
